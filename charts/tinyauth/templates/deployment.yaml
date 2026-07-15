@@ -50,9 +50,21 @@ spec:
             - name: TINYAUTH_APPURL
               value: {{ .Values.tinyauth.appUrl | quote }}
             {{- end }}
+            {{- if .Values.tinyauth.configFile }}
+            - name: TINYAUTH_CONFIGFILE
+              value: {{ .Values.tinyauth.configFile | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.labelProvider }}
+            - name: TINYAUTH_LABELPROVIDER
+              value: {{ .Values.tinyauth.labelProvider | quote }}
+            {{- end }}
             {{- if .Values.tinyauth.resources.path }}
             - name: TINYAUTH_RESOURCES_PATH
               value: {{ .Values.tinyauth.resources.path | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.database.driver }}
+            - name: TINYAUTH_DATABASE_DRIVER
+              value: {{ .Values.tinyauth.database.driver | quote }}
             {{- end }}
             {{- if .Values.tinyauth.database.path }}
             - name: TINYAUTH_DATABASE_PATH
@@ -88,9 +100,17 @@ spec:
             - name: TINYAUTH_AUTH_IP_BLOCK
               value: {{ .Values.tinyauth.auth.ip.block | quote }}
             {{- end }}
+            {{- if .Values.tinyauth.auth.ip.bypass }}
+            - name: TINYAUTH_AUTH_IP_BYPASS
+              value: {{ .Values.tinyauth.auth.ip.bypass | quote }}
+            {{- end }}
             {{- if .Values.tinyauth.auth.users }}
             - name: TINYAUTH_AUTH_USERS
               value: {{ .Values.tinyauth.auth.users | quote }}
+            {{- end }}
+            {{- if not (kindIs "invalid" .Values.tinyauth.auth.subdomainsEnabled) }}
+            - name: TINYAUTH_AUTH_SUBDOMAINSENABLED
+              value: {{ .Values.tinyauth.auth.subdomainsEnabled | quote }}
             {{- end }}
             {{- if .Values.tinyauth.auth.usersFile }}
             - name: TINYAUTH_AUTH_USERSFILE
@@ -120,10 +140,183 @@ spec:
             - name: TINYAUTH_AUTH_TRUSTEDPROXIES
               value: {{ .Values.tinyauth.auth.trustedProxies | quote }}
             {{- end }}
+            {{- if .Values.tinyauth.auth.acls.policy }}
+            - name: TINYAUTH_AUTH_ACLS_POLICY
+              value: {{ .Values.tinyauth.auth.acls.policy | quote }}
+            {{- end }}
+            {{- range .Values.tinyauth.auth.userAttributes }}
+            {{- if not .username }}{{- continue }}{{- end }}
+            {{- $user := .username | upper }}
+            {{- if .name }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_NAME
+              value: {{ .name | quote }}
+            {{- end }}
+            {{- if .givenName }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_GIVENNAME
+              value: {{ .givenName | quote }}
+            {{- end }}
+            {{- if .familyName }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_FAMILYNAME
+              value: {{ .familyName | quote }}
+            {{- end }}
+            {{- if .middleName }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_MIDDLENAME
+              value: {{ .middleName | quote }}
+            {{- end }}
+            {{- if .nickname }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_NICKNAME
+              value: {{ .nickname | quote }}
+            {{- end }}
+            {{- if .profile }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_PROFILE
+              value: {{ .profile | quote }}
+            {{- end }}
+            {{- if .picture }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_PICTURE
+              value: {{ .picture | quote }}
+            {{- end }}
+            {{- if .website }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_WEBSITE
+              value: {{ .website | quote }}
+            {{- end }}
+            {{- if .email }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_EMAIL
+              value: {{ .email | quote }}
+            {{- end }}
+            {{- if .gender }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_GENDER
+              value: {{ .gender | quote }}
+            {{- end }}
+            {{- if .birthdate }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_BIRTHDATE
+              value: {{ .birthdate | quote }}
+            {{- end }}
+            {{- if .zoneInfo }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_ZONEINFO
+              value: {{ .zoneInfo | quote }}
+            {{- end }}
+            {{- if .locale }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_LOCALE
+              value: {{ .locale | quote }}
+            {{- end }}
+            {{- if .phoneNumber }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_PHONENUMBER
+              value: {{ .phoneNumber | quote }}
+            {{- end }}
+            {{- $address := .address | default dict }}
+            {{- if $address.formatted }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_ADDRESS_FORMATTED
+              value: {{ $address.formatted | quote }}
+            {{- end }}
+            {{- if $address.streetAddress }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_ADDRESS_STREETADDRESS
+              value: {{ $address.streetAddress | quote }}
+            {{- end }}
+            {{- if $address.locality }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_ADDRESS_LOCALITY
+              value: {{ $address.locality | quote }}
+            {{- end }}
+            {{- if $address.region }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_ADDRESS_REGION
+              value: {{ $address.region | quote }}
+            {{- end }}
+            {{- if $address.postalCode }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_ADDRESS_POSTALCODE
+              value: {{ $address.postalCode | quote }}
+            {{- end }}
+            {{- if $address.country }}
+            - name: TINYAUTH_AUTH_USERATTRIBUTES_{{ $user }}_ADDRESS_COUNTRY
+              value: {{ $address.country | quote }}
+            {{- end }}
+            {{- end }}
+            # apps config
+            {{- range .Values.tinyauth.apps }}
+            {{- if not .id }}{{- continue }}{{- end }}
+            {{- $app := .id | upper }}
+            {{- $config := .config | default dict }}
+            {{- if $config.domain }}
+            - name: TINYAUTH_APPS_{{ $app }}_CONFIG_DOMAIN
+              value: {{ $config.domain | quote }}
+            {{- end }}
+            {{- $users := .users | default dict }}
+            {{- if $users.allow }}
+            - name: TINYAUTH_APPS_{{ $app }}_USERS_ALLOW
+              value: {{ $users.allow | quote }}
+            {{- end }}
+            {{- if $users.block }}
+            - name: TINYAUTH_APPS_{{ $app }}_USERS_BLOCK
+              value: {{ $users.block | quote }}
+            {{- end }}
+            {{- $oauth := .oauth | default dict }}
+            {{- if $oauth.whitelist }}
+            - name: TINYAUTH_APPS_{{ $app }}_OAUTH_WHITELIST
+              value: {{ $oauth.whitelist | quote }}
+            {{- end }}
+            {{- if $oauth.groups }}
+            - name: TINYAUTH_APPS_{{ $app }}_OAUTH_GROUPS
+              value: {{ $oauth.groups | quote }}
+            {{- end }}
+            {{- $ip := .ip | default dict }}
+            {{- if $ip.allow }}
+            - name: TINYAUTH_APPS_{{ $app }}_IP_ALLOW
+              value: {{ $ip.allow | quote }}
+            {{- end }}
+            {{- if $ip.block }}
+            - name: TINYAUTH_APPS_{{ $app }}_IP_BLOCK
+              value: {{ $ip.block | quote }}
+            {{- end }}
+            {{- if $ip.bypass }}
+            - name: TINYAUTH_APPS_{{ $app }}_IP_BYPASS
+              value: {{ $ip.bypass | quote }}
+            {{- end }}
+            {{- $response := .response | default dict }}
+            {{- if $response.headers }}
+            - name: TINYAUTH_APPS_{{ $app }}_RESPONSE_HEADERS
+              value: {{ $response.headers | quote }}
+            {{- end }}
+            {{- $basicAuth := $response.basicAuth | default dict }}
+            {{- if $basicAuth.username }}
+            - name: TINYAUTH_APPS_{{ $app }}_RESPONSE_BASICAUTH_USERNAME
+              value: {{ $basicAuth.username | quote }}
+            {{- end }}
+            {{- $basicAuthSecretRef := $basicAuth.passwordSecretRef | default dict }}
+            {{- if $basicAuthSecretRef.name }}
+            - name: TINYAUTH_APPS_{{ $app }}_RESPONSE_BASICAUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $basicAuthSecretRef.name }}
+                  key: {{ $basicAuthSecretRef.key }}
+            {{- else if $basicAuth.password }}
+            - name: TINYAUTH_APPS_{{ $app }}_RESPONSE_BASICAUTH_PASSWORD
+              value: {{ $basicAuth.password | quote }}
+            {{- end }}
+            {{- if $basicAuth.passwordFile }}
+            - name: TINYAUTH_APPS_{{ $app }}_RESPONSE_BASICAUTH_PASSWORDFILE
+              value: {{ $basicAuth.passwordFile | quote }}
+            {{- end }}
+            {{- $path := .path | default dict }}
+            {{- if $path.allow }}
+            - name: TINYAUTH_APPS_{{ $app }}_PATH_ALLOW
+              value: {{ $path.allow | quote }}
+            {{- end }}
+            {{- if $path.block }}
+            - name: TINYAUTH_APPS_{{ $app }}_PATH_BLOCK
+              value: {{ $path.block | quote }}
+            {{- end }}
+            {{- $ldap := .ldap | default dict }}
+            {{- if $ldap.groups }}
+            - name: TINYAUTH_APPS_{{ $app }}_LDAP_GROUPS
+              value: {{ $ldap.groups | quote }}
+            {{- end }}
+            {{- end }}
             # oauth config
             {{- if .Values.tinyauth.oauth.whitelist }}
             - name: TINYAUTH_OAUTH_WHITELIST
               value: {{ .Values.tinyauth.oauth.whitelist | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.oauth.whitelistFile }}
+            - name: TINYAUTH_OAUTH_WHITELISTFILE
+              value: {{ .Values.tinyauth.oauth.whitelistFile | quote }}
             {{- end }}
             {{- if .Values.tinyauth.oauth.autoRedirect }}
             - name: TINYAUTH_OAUTH_AUTOREDIRECT
@@ -149,6 +342,14 @@ spec:
             {{- if .clientSecretFile }}
             - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_CLIENTSECRETFILE
               value: {{ .clientSecretFile | quote }}
+            {{- end }}
+            {{- if .whitelist }}
+            - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_WHITELIST
+              value: {{ .whitelist | quote }}
+            {{- end }}
+            {{- if .whitelistFile }}
+            - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_WHITELISTFILE
+              value: {{ .whitelistFile | quote }}
             {{- end }}
             {{- if .scopes }}
             - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_SCOPES
@@ -254,6 +455,10 @@ spec:
             - name: TINYAUTH_LDAP_BINDPASSWORD
               value: {{ .Values.tinyauth.ldap.bindPassword | quote }}
             {{- end }}
+            {{- if .Values.tinyauth.ldap.bindPasswordFile }}
+            - name: TINYAUTH_LDAP_BINDPASSWORDFILE
+              value: {{ .Values.tinyauth.ldap.bindPasswordFile | quote }}
+            {{- end }}
             {{- if .Values.tinyauth.ldap.baseDn }}
             - name: TINYAUTH_LDAP_BASEDN
               value: {{ .Values.tinyauth.ldap.baseDn | quote }}
@@ -277,6 +482,33 @@ spec:
             {{- if .Values.tinyauth.ldap.groupCacheTtl }}
             - name: TINYAUTH_LDAP_GROUPCACHETTL
               value: {{ .Values.tinyauth.ldap.groupCacheTtl | quote }}
+            {{- end }}
+            # tailscale config
+            {{- if .Values.tinyauth.tailscale.enabled }}
+            - name: TINYAUTH_TAILSCALE_ENABLED
+              value: {{ .Values.tinyauth.tailscale.enabled | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.tailscale.apiTokenSecretRef.name }}
+            - name: TINYAUTH_TAILSCALE_APITOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.tinyauth.tailscale.apiTokenSecretRef.name }}
+                  key: {{ .Values.tinyauth.tailscale.apiTokenSecretRef.key }}
+            {{- else if .Values.tinyauth.tailscale.apiToken }}
+            - name: TINYAUTH_TAILSCALE_APITOKEN
+              value: {{ .Values.tinyauth.tailscale.apiToken | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.tailscale.apiTokenFile }}
+            - name: TINYAUTH_TAILSCALE_APITOKENFILE
+              value: {{ .Values.tinyauth.tailscale.apiTokenFile | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.tailscale.tailnet }}
+            - name: TINYAUTH_TAILSCALE_TAILNET
+              value: {{ .Values.tinyauth.tailscale.tailnet | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.tailscale.cacheDuration }}
+            - name: TINYAUTH_TAILSCALE_CACHEDURATION
+              value: {{ .Values.tinyauth.tailscale.cacheDuration | quote }}
             {{- end }}
             # log config
             {{- if .Values.tinyauth.log.level }}

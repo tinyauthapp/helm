@@ -7,7 +7,7 @@ deploymentStrategy:
   type: RollingUpdate # @schema default: "RollingUpdate"
 
 image:
-  repository: ghcr.io/steveiliop56/tinyauth # @schema default: "ghcr.io/steveiliop56/tinyauth"
+  repository: ghcr.io/tinyauthapp/tinyauth # @schema default: "ghcr.io/tinyauthapp/tinyauth"
   pullPolicy: IfNotPresent # @schema default: "IfNotPresent"
   # Overrides the image tag whose default is the chart appVersion.
   tag: "" # @schema default: ""
@@ -50,6 +50,12 @@ tinyauth:
   # The base URL where the app is hosted.
   appUrl: "" # @schema default: ""; required: true
 
+  # Path to config file.
+  configFile: "" # @schema default: ""
+
+  # Label provider to use for ACLs (auto, docker, kubernetes or none to disable). auto detects the environment.
+  labelProvider: "auto" # @schema default: "auto"
+
   # Resources config
   resources:
     path: "/data/resources" # @schema default: "/data/resources"
@@ -57,6 +63,9 @@ tinyauth:
 
   # Database config
   database:
+    # The database driver to use. Valid values: sqlite, postgres, memory.
+    driver: "sqlite" # @schema default: "sqlite"
+    # The path to the SQLite database file, or connection URL when driver is postgres.
     path: "/data/tinyauth.db" # @schema default: "/data/tinyauth.db"
 
   # Analytics config
@@ -81,8 +90,12 @@ tinyauth:
       allow: "" # @schema default: ""
       # List of blocked IPs or CIDR ranges.
       block: "" # @schema default: ""
+      # List of IPs or CIDR ranges that bypass authentication entirely.
+      bypass: "" # @schema default: ""
     # Comma-separated list of users (username:hashed_password).
     users: "" # @schema default: ""
+    # Enable subdomains support.
+    subdomainsEnabled: true # @schema default: true
     # Path to the users file.
     usersFile: "" # @schema default: ""
     # Enable secure cookies.
@@ -97,11 +110,109 @@ tinyauth:
     loginMaxRetries: 3 # @schema default: 3
     # Comma-separated list of trusted proxy addresses.
     trustedProxies: "" # @schema default: ""
+    # ACL config
+    acls:
+      # ACL policy for allow-by-default or deny-by-default. Available options: allow, deny.
+      policy: "allow" # @schema default: "allow"
+    # Per-user attributes (OIDC claims), keyed by username.
+    userAttributes: # @schema type:array; default:[]
+      - username: "" # @schema type:string; default:""
+        # Full name of the user.
+        name: "" # @schema type:string; default:""
+        # Given (first) name of the user.
+        givenName: "" # @schema type:string; default:""
+        # Family (last) name of the user.
+        familyName: "" # @schema type:string; default:""
+        # Middle name of the user.
+        middleName: "" # @schema type:string; default:""
+        # Nickname of the user.
+        nickname: "" # @schema type:string; default:""
+        # URL of the user's profile page.
+        profile: "" # @schema type:string; default:""
+        # URL of the user's profile picture.
+        picture: "" # @schema type:string; default:""
+        # URL of the user's website.
+        website: "" # @schema type:string; default:""
+        # Email address of the user.
+        email: "" # @schema type:string; default:""
+        # Gender of the user.
+        gender: "" # @schema type:string; default:""
+        # Birthdate of the user (YYYY-MM-DD).
+        birthdate: "" # @schema type:string; default:""
+        # Time zone of the user (e.g. Europe/Athens).
+        zoneInfo: "" # @schema type:string; default:""
+        # Locale of the user (e.g. en-US).
+        locale: "" # @schema type:string; default:""
+        # Phone number of the user.
+        phoneNumber: "" # @schema type:string; default:""
+        # Address of the user.
+        address: # @schema type:object
+          # Full mailing address, formatted for display.
+          formatted: "" # @schema type:string; default:""
+          # Street address.
+          streetAddress: "" # @schema type:string; default:""
+          # City or locality.
+          locality: "" # @schema type:string; default:""
+          # State, province, or region.
+          region: "" # @schema type:string; default:""
+          # Zip or postal code.
+          postalCode: "" # @schema type:string; default:""
+          # Country.
+          country: "" # @schema type:string; default:""
+
+  # apps config
+  # Per-app configuration, keyed by app id (name).
+  apps: # @schema type:array; default:[]
+    - id: "" # @schema type:string; default:""
+      config:
+        # The domain of the app.
+        domain: "" # @schema type:string; default:""
+      users:
+        # Comma-separated list of allowed users.
+        allow: "" # @schema type:string; default:""
+        # Comma-separated list of blocked users.
+        block: "" # @schema type:string; default:""
+      oauth:
+        # Comma-separated list of allowed OAuth groups.
+        whitelist: "" # @schema type:string; default:""
+        # Comma-separated list of required OAuth groups.
+        groups: "" # @schema type:string; default:""
+      ip:
+        # List of allowed IPs or CIDR ranges.
+        allow: "" # @schema type:string; default:""
+        # List of blocked IPs or CIDR ranges.
+        block: "" # @schema type:string; default:""
+        # List of IPs or CIDR ranges that bypass authentication.
+        bypass: "" # @schema type:string; default:""
+      response:
+        # Custom headers to add to the response.
+        headers: "" # @schema type:string; default:""
+        basicAuth:
+          # Basic auth username.
+          username: "" # @schema type:string; default:""
+          # Basic auth password.
+          password: "" # @schema type:string; default:""
+          # Path to the file containing the basic auth password.
+          passwordFile: "" # @schema type:string; default:""
+          # Reference to an existing secret containing the basic auth password.
+          passwordSecretRef: # @schema type:object
+            name: "" # @schema type:string; default:""
+            key: "" # @schema type:string; default:""
+      path:
+        # Comma-separated list of allowed paths.
+        allow: "" # @schema type:string; default:""
+        # Comma-separated list of blocked paths.
+        block: "" # @schema type:string; default:""
+      ldap:
+        # Comma-separated list of required LDAP groups.
+        groups: "" # @schema type:string; default:""
 
   # oauth config
   oauth:
     # Comma-separated list of allowed OAuth domains.
     whitelist: "" # @schema default: ""
+    # Path to the OAuth whitelist file.
+    whitelistFile: "" # @schema default: ""
     # The OAuth provider to use for automatic redirection.
     autoRedirect: "" # @schema default: ""
     # OAuth providers list.
@@ -113,6 +224,10 @@ tinyauth:
         clientSecretSecretRef: # @schema type:object
           name: "" # @schema type:string; default:""
           key: "" # @schema type:string; default:""
+        # Comma-separated list of allowed OAuth domains for this provider.
+        whitelist: "" # @schema type:string; default:""
+        # Path to the OAuth whitelist file for this provider.
+        whitelistFile: "" # @schema type:string; default:""
         scopes: "" # @schema type:string; default:""
         redirectUrl: "" # @schema type:string; default:""
         authUrl: "" # @schema type:string; default:""
@@ -158,6 +273,8 @@ tinyauth:
     bindDn: "" # @schema default: ""
     # Bind password for LDAP authentication.
     bindPassword: "" # @schema default: ""
+    # Path to the file containing the bind password.
+    bindPasswordFile: "" # @schema default: ""
     bindPasswordSecretRef:
       name: "" # @schema default: ""
       key: "" # @schema default: ""
@@ -173,6 +290,23 @@ tinyauth:
     authKey: "" # @schema default: ""
     # Cache duration for LDAP group membership in seconds.
     groupCacheTtl: 900 # @schema default: 900
+
+  # tailscale config
+  tailscale:
+    # Enable Tailscale integration.
+    enabled: false # @schema default: false
+    # Tailscale API token.
+    apiToken: "" # @schema default: ""
+    # Path to the file containing the Tailscale API token.
+    apiTokenFile: "" # @schema default: ""
+    # Reference to an existing secret containing the Tailscale API token.
+    apiTokenSecretRef:
+      name: "" # @schema default: ""
+      key: "" # @schema default: ""
+    # Tailnet name.
+    tailnet: "" # @schema default: ""
+    # Cache duration for Tailscale device and user lists in seconds.
+    cacheDuration: 300 # @schema default: 300
 
   # log config
   log:

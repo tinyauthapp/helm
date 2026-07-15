@@ -131,7 +131,7 @@
                     "type": "string"
                 },
                 "repository": {
-                    "default": "ghcr.io/steveiliop56/tinyauth",
+                    "default": "ghcr.io/tinyauthapp/tinyauth",
                     "type": "string"
                 },
                 "tag": {
@@ -353,9 +353,144 @@
                     "default": "",
                     "type": "string"
                 },
+                "apps": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "config": {
+                                "type": "object",
+                                "properties": {
+                                    "domain": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "id": {
+                                "default": "",
+                                "type": "string"
+                            },
+                            "ip": {
+                                "type": "object",
+                                "properties": {
+                                    "allow": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "block": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "bypass": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "ldap": {
+                                "type": "object",
+                                "properties": {
+                                    "groups": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "oauth": {
+                                "type": "object",
+                                "properties": {
+                                    "groups": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "whitelist": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "path": {
+                                "type": "object",
+                                "properties": {
+                                    "allow": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "block": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "response": {
+                                "type": "object",
+                                "properties": {
+                                    "basicAuth": {
+                                        "type": "object",
+                                        "properties": {
+                                            "password": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "passwordFile": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "passwordSecretRef": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "key": {
+                                                        "default": "",
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "default": "",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "username": {
+                                                "default": "",
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "headers": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "users": {
+                                "type": "object",
+                                "properties": {
+                                    "allow": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "block": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "auth": {
                     "type": "object",
                     "properties": {
+                        "acls": {
+                            "type": "object",
+                            "properties": {
+                                "policy": {
+                                    "default": "allow",
+                                    "type": "string"
+                                }
+                            }
+                        },
                         "ip": {
                             "type": "object",
                             "properties": {
@@ -364,6 +499,10 @@
                                     "type": "string"
                                 },
                                 "block": {
+                                    "default": "",
+                                    "type": "string"
+                                },
+                                "bypass": {
                                     "default": "",
                                     "type": "string"
                                 }
@@ -389,9 +528,111 @@
                             "default": 0,
                             "type": "integer"
                         },
+                        "subdomainsEnabled": {
+                            "default": true,
+                            "type": "boolean"
+                        },
                         "trustedProxies": {
                             "default": "",
                             "type": "string"
+                        },
+                        "userAttributes": {
+                            "default": [],
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "address": {
+                                        "type": "object",
+                                        "properties": {
+                                            "country": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "formatted": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "locality": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "postalCode": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "region": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "streetAddress": {
+                                                "default": "",
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "birthdate": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "familyName": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "givenName": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "locale": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "middleName": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "nickname": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "phoneNumber": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "picture": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "profile": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "website": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "zoneInfo": {
+                                        "default": "",
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         },
                         "users": {
                             "default": "",
@@ -403,14 +644,26 @@
                         }
                     }
                 },
+                "configFile": {
+                    "default": "",
+                    "type": "string"
+                },
                 "database": {
                     "type": "object",
                     "properties": {
+                        "driver": {
+                            "default": "sqlite",
+                            "type": "string"
+                        },
                         "path": {
                             "default": "/data/tinyauth.db",
                             "type": "string"
                         }
                     }
+                },
+                "labelProvider": {
+                    "default": "auto",
+                    "type": "string"
                 },
                 "ldap": {
                     "type": "object",
@@ -436,6 +689,10 @@
                             "type": "string"
                         },
                         "bindPassword": {
+                            "default": "",
+                            "type": "string"
+                        },
+                        "bindPasswordFile": {
                             "default": "",
                             "type": "string"
                         },
@@ -592,11 +849,23 @@
                                     "userInfoUrl": {
                                         "default": "",
                                         "type": "string"
+                                    },
+                                    "whitelist": {
+                                        "default": "",
+                                        "type": "string"
+                                    },
+                                    "whitelistFile": {
+                                        "default": "",
+                                        "type": "string"
                                     }
                                 }
                             }
                         },
                         "whitelist": {
+                            "default": "",
+                            "type": "string"
+                        },
+                        "whitelistFile": {
                             "default": "",
                             "type": "string"
                         }
@@ -686,6 +955,44 @@
                             "type": "integer"
                         },
                         "socketPath": {
+                            "default": "",
+                            "type": "string"
+                        }
+                    }
+                },
+                "tailscale": {
+                    "type": "object",
+                    "properties": {
+                        "apiToken": {
+                            "default": "",
+                            "type": "string"
+                        },
+                        "apiTokenFile": {
+                            "default": "",
+                            "type": "string"
+                        },
+                        "apiTokenSecretRef": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "default": "",
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "default": "",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "cacheDuration": {
+                            "default": 300,
+                            "type": "integer"
+                        },
+                        "enabled": {
+                            "default": false,
+                            "type": "boolean"
+                        },
+                        "tailnet": {
                             "default": "",
                             "type": "string"
                         }

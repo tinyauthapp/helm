@@ -1,6 +1,6 @@
 # tinyauth
 
-![Version: 2.0.8](https://img.shields.io/badge/Version-2.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.0.7](https://img.shields.io/badge/AppVersion-v5.0.7-informational?style=flat-square)
+![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.1.0](https://img.shields.io/badge/AppVersion-v5.1.0-informational?style=flat-square)
 
 The tiniest authentication and authorization server you have ever seen.
 
@@ -24,7 +24,7 @@ The tiniest authentication and authorization server you have ever seen.
 | httpRoute.rules[0].matches[0].path.type | string | `"PathPrefix"` |  |
 | httpRoute.rules[0].matches[0].path.value | string | `"/"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ghcr.io/steveiliop56/tinyauth"` |  |
+| image.repository | string | `"ghcr.io/tinyauthapp/tinyauth"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
@@ -60,23 +60,69 @@ The tiniest authentication and authorization server you have ever seen.
 | serviceAccount.name | string | `""` |  |
 | tinyauth.analytics.enabled | bool | `true` |  |
 | tinyauth.appUrl | string | `""` |  |
+| tinyauth.apps[0].config.domain | string | `""` |  |
+| tinyauth.apps[0].id | string | `""` |  |
+| tinyauth.apps[0].ip.allow | string | `""` |  |
+| tinyauth.apps[0].ip.block | string | `""` |  |
+| tinyauth.apps[0].ip.bypass | string | `""` |  |
+| tinyauth.apps[0].ldap.groups | string | `""` |  |
+| tinyauth.apps[0].oauth.groups | string | `""` |  |
+| tinyauth.apps[0].oauth.whitelist | string | `""` |  |
+| tinyauth.apps[0].path.allow | string | `""` |  |
+| tinyauth.apps[0].path.block | string | `""` |  |
+| tinyauth.apps[0].response.basicAuth.password | string | `""` |  |
+| tinyauth.apps[0].response.basicAuth.passwordFile | string | `""` |  |
+| tinyauth.apps[0].response.basicAuth.passwordSecretRef.key | string | `""` |  |
+| tinyauth.apps[0].response.basicAuth.passwordSecretRef.name | string | `""` |  |
+| tinyauth.apps[0].response.basicAuth.username | string | `""` |  |
+| tinyauth.apps[0].response.headers | string | `""` |  |
+| tinyauth.apps[0].users.allow | string | `""` |  |
+| tinyauth.apps[0].users.block | string | `""` |  |
+| tinyauth.auth.acls.policy | string | `"allow"` |  |
 | tinyauth.auth.ip.allow | string | `""` |  |
 | tinyauth.auth.ip.block | string | `""` |  |
+| tinyauth.auth.ip.bypass | string | `""` |  |
 | tinyauth.auth.loginMaxRetries | int | `3` |  |
 | tinyauth.auth.loginTimeout | int | `300` |  |
 | tinyauth.auth.secureCookie | bool | `false` |  |
 | tinyauth.auth.sessionExpiry | int | `86400` |  |
 | tinyauth.auth.sessionMaxLifetime | int | `0` |  |
+| tinyauth.auth.subdomainsEnabled | bool | `true` |  |
 | tinyauth.auth.trustedProxies | string | `""` |  |
+| tinyauth.auth.userAttributes[0].address.country | string | `""` |  |
+| tinyauth.auth.userAttributes[0].address.formatted | string | `""` |  |
+| tinyauth.auth.userAttributes[0].address.locality | string | `""` |  |
+| tinyauth.auth.userAttributes[0].address.postalCode | string | `""` |  |
+| tinyauth.auth.userAttributes[0].address.region | string | `""` |  |
+| tinyauth.auth.userAttributes[0].address.streetAddress | string | `""` |  |
+| tinyauth.auth.userAttributes[0].birthdate | string | `""` |  |
+| tinyauth.auth.userAttributes[0].email | string | `""` |  |
+| tinyauth.auth.userAttributes[0].familyName | string | `""` |  |
+| tinyauth.auth.userAttributes[0].gender | string | `""` |  |
+| tinyauth.auth.userAttributes[0].givenName | string | `""` |  |
+| tinyauth.auth.userAttributes[0].locale | string | `""` |  |
+| tinyauth.auth.userAttributes[0].middleName | string | `""` |  |
+| tinyauth.auth.userAttributes[0].name | string | `""` |  |
+| tinyauth.auth.userAttributes[0].nickname | string | `""` |  |
+| tinyauth.auth.userAttributes[0].phoneNumber | string | `""` |  |
+| tinyauth.auth.userAttributes[0].picture | string | `""` |  |
+| tinyauth.auth.userAttributes[0].profile | string | `""` |  |
+| tinyauth.auth.userAttributes[0].username | string | `""` |  |
+| tinyauth.auth.userAttributes[0].website | string | `""` |  |
+| tinyauth.auth.userAttributes[0].zoneInfo | string | `""` |  |
 | tinyauth.auth.users | string | `""` |  |
 | tinyauth.auth.usersFile | string | `""` |  |
+| tinyauth.configFile | string | `""` |  |
+| tinyauth.database.driver | string | `"sqlite"` |  |
 | tinyauth.database.path | string | `"/data/tinyauth.db"` |  |
+| tinyauth.labelProvider | string | `"auto"` |  |
 | tinyauth.ldap.address | string | `""` |  |
 | tinyauth.ldap.authCert | string | `""` |  |
 | tinyauth.ldap.authKey | string | `""` |  |
 | tinyauth.ldap.baseDn | string | `""` |  |
 | tinyauth.ldap.bindDn | string | `""` |  |
 | tinyauth.ldap.bindPassword | string | `""` |  |
+| tinyauth.ldap.bindPasswordFile | string | `""` |  |
 | tinyauth.ldap.bindPasswordSecretRef.key | string | `""` |  |
 | tinyauth.ldap.bindPasswordSecretRef.name | string | `""` |  |
 | tinyauth.ldap.groupCacheTtl | int | `900` |  |
@@ -104,7 +150,10 @@ The tiniest authentication and authorization server you have ever seen.
 | tinyauth.oauth.providers[0].scopes | string | `""` |  |
 | tinyauth.oauth.providers[0].tokenUrl | string | `""` |  |
 | tinyauth.oauth.providers[0].userInfoUrl | string | `""` |  |
+| tinyauth.oauth.providers[0].whitelist | string | `""` |  |
+| tinyauth.oauth.providers[0].whitelistFile | string | `""` |  |
 | tinyauth.oauth.whitelist | string | `""` |  |
+| tinyauth.oauth.whitelistFile | string | `""` |  |
 | tinyauth.oidc.clients[0].clientId | string | `""` |  |
 | tinyauth.oidc.clients[0].clientSecret | string | `""` |  |
 | tinyauth.oidc.clients[0].clientSecretFile | string | `""` |  |
@@ -120,6 +169,13 @@ The tiniest authentication and authorization server you have ever seen.
 | tinyauth.server.address | string | `"0.0.0.0"` |  |
 | tinyauth.server.port | int | `3000` |  |
 | tinyauth.server.socketPath | string | `""` |  |
+| tinyauth.tailscale.apiToken | string | `""` |  |
+| tinyauth.tailscale.apiTokenFile | string | `""` |  |
+| tinyauth.tailscale.apiTokenSecretRef.key | string | `""` |  |
+| tinyauth.tailscale.apiTokenSecretRef.name | string | `""` |  |
+| tinyauth.tailscale.cacheDuration | int | `300` |  |
+| tinyauth.tailscale.enabled | bool | `false` |  |
+| tinyauth.tailscale.tailnet | string | `""` |  |
 | tinyauth.ui.backgroundImage | string | `"/background.jpg"` |  |
 | tinyauth.ui.forgotPasswordMessage | string | `"You can change your password by changing the configuration."` |  |
 | tinyauth.ui.title | string | `"Tinyauth"` |  |
