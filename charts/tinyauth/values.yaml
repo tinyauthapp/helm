@@ -407,6 +407,18 @@ httpRoute:
             type: PathPrefix
             value: /
 
+# Extra Kubernetes objects to deploy alongside the chart.
+# Useful for deploying additional manifests (e.g. SealedSecrets containing OIDC
+# client credentials) without needing a separate Helm release. Each item is a
+# raw Kubernetes manifest and may use template expressions.
+extraObjects: [] # @schema default: []
+# - apiVersion: v1
+#   kind: Secret
+#   metadata:
+#     name: my-extra-secret
+#   stringData:
+#     key: value
+
 # Additional environment variables for the container
 env: [] # @schema default: []
 # - name: CUSTOM_VAR

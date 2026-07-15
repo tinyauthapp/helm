@@ -16,6 +16,7 @@ The tiniest authentication and authorization server you have ever seen.
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | deploymentStrategy.type | string | `"RollingUpdate"` |  |
 | env | list | `[]` |  |
+| extraObjects | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | httpRoute.annotations | object | `{}` |  |
 | httpRoute.enabled | bool | `false` |  |

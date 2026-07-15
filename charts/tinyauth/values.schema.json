@@ -43,6 +43,10 @@
             "default": [],
             "type": "array"
         },
+        "extraObjects": {
+            "default": [],
+            "type": "array"
+        },
         "fullnameOverride": {
             "type": "string"
         },
