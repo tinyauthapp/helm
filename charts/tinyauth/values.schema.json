@@ -665,6 +665,15 @@
                         }
                     }
                 },
+                "experimental": {
+                    "type": "object",
+                    "properties": {
+                        "oauthBridgeEnabled": {
+                            "default": false,
+                            "type": "boolean"
+                        }
+                    }
+                },
                 "labelProvider": {
                     "default": "auto",
                     "type": "string"

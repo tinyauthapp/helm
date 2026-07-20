@@ -543,6 +543,10 @@ spec:
             - name: TINYAUTH_LOG_STREAMS_AUDIT_LEVEL
               value: {{ .Values.tinyauth.log.streams.audit.level | quote }}
             {{- end }}
+            {{- if .Values.tinyauth.experimental.oauthBridgeEnabled }}
+            - name: TINYAUTH_EXPERIMENTAL_OAUTHBRIDGEENABLED
+              value: {{ .Values.tinyauth.experimental.oauthBridgeEnabled | quote }}
+            {{- end }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

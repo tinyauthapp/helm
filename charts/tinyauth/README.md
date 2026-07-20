@@ -1,6 +1,6 @@
 # tinyauth
 
-![Version: 2.1.1](https://img.shields.io/badge/Version-2.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.1.1](https://img.shields.io/badge/AppVersion-v5.1.1-informational?style=flat-square)
+![Version: 2.1.2](https://img.shields.io/badge/Version-2.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.1.2](https://img.shields.io/badge/AppVersion-v5.1.2-informational?style=flat-square)
 
 The tiniest authentication and authorization server you have ever seen.
 
@@ -116,6 +116,7 @@ The tiniest authentication and authorization server you have ever seen.
 | tinyauth.configFile | string | `""` |  |
 | tinyauth.database.driver | string | `"sqlite"` |  |
 | tinyauth.database.path | string | `"/data/tinyauth.db"` |  |
+| tinyauth.experimental.oauthBridgeEnabled | bool | `false` |  |
 | tinyauth.labelProvider | string | `"auto"` |  |
 | tinyauth.ldap.address | string | `""` |  |
 | tinyauth.ldap.authCert | string | `""` |  |

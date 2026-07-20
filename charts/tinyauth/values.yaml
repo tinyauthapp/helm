@@ -308,6 +308,11 @@ tinyauth:
     # Cache duration for Tailscale device and user lists in seconds.
     cacheDuration: 300 # @schema default: 300
 
+  # experimental config
+  experimental:
+    # Enable the OAuth bridge, uses a new way to format OAuth user information.
+    oauthBridgeEnabled: false # @schema default: false
+
   # log config
   log:
     # Log level (trace, debug, info, warn, error).
