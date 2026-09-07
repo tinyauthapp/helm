@@ -668,6 +668,10 @@
                 "experimental": {
                     "type": "object",
                     "properties": {
+                        "disableAuthModuleFallback": {
+                            "default": false,
+                            "type": "boolean"
+                        },
                         "oauthBridgeEnabled": {
                             "default": false,
                             "type": "boolean"
@@ -809,6 +813,27 @@
                                     "authUrl": {
                                         "default": "",
                                         "type": "string"
+                                    },
+                                    "claims": {
+                                        "type": "object",
+                                        "properties": {
+                                            "email": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "groups": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "default": "",
+                                                "type": "string"
+                                            },
+                                            "username": {
+                                                "default": "",
+                                                "type": "string"
+                                            }
+                                        }
                                     },
                                     "clientId": {
                                         "default": "",
@@ -1015,7 +1040,7 @@
                     "type": "object",
                     "properties": {
                         "backgroundImage": {
-                            "default": "/background.jpg",
+                            "default": "/background.webp",
                             "type": "string"
                         },
                         "forgotPasswordMessage": {

@@ -379,6 +379,23 @@ spec:
             - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_NAME
               value: {{ .name | quote }}
             {{- end }}
+            {{- $claims := .claims | default dict }}
+            {{- if $claims.username }}
+            - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_CLAIMS_USERNAME
+              value: {{ $claims.username | quote }}
+            {{- end }}
+            {{- if $claims.email }}
+            - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_CLAIMS_EMAIL
+              value: {{ $claims.email | quote }}
+            {{- end }}
+            {{- if $claims.name }}
+            - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_CLAIMS_NAME
+              value: {{ $claims.name | quote }}
+            {{- end }}
+            {{- if $claims.groups }}
+            - name: TINYAUTH_OAUTH_PROVIDERS_{{ $providerId }}_CLAIMS_GROUPS
+              value: {{ $claims.groups | quote }}
+            {{- end }}
             {{- end }}
             # oidc config
             {{- if .Values.tinyauth.oidc.privateKeyPath }}
@@ -546,6 +563,10 @@ spec:
             {{- if .Values.tinyauth.experimental.oauthBridgeEnabled }}
             - name: TINYAUTH_EXPERIMENTAL_OAUTHBRIDGEENABLED
               value: {{ .Values.tinyauth.experimental.oauthBridgeEnabled | quote }}
+            {{- end }}
+            {{- if .Values.tinyauth.experimental.disableAuthModuleFallback }}
+            - name: TINYAUTH_EXPERIMENTAL_DISABLEAUTHMODULEFALLBACK
+              value: {{ .Values.tinyauth.experimental.disableAuthModuleFallback | quote }}
             {{- end }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}

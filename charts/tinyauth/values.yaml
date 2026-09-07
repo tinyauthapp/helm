@@ -235,6 +235,15 @@ tinyauth:
         userInfoUrl: "" # @schema type:string; default:""
         insecure: false # @schema type:boolean; default:false
         name: "" # @schema type:string; default:""
+        claims: # @schema type:object
+          # Username claim.
+          username: "" # @schema type:string; default:""
+          # Email claim.
+          email: "" # @schema type:string; default:""
+          # Name claim.
+          name: "" # @schema type:string; default:""
+          # Groups claim.
+          groups: "" # @schema type:string; default:""
 
   # oidc config
   oidc:
@@ -261,7 +270,7 @@ tinyauth:
     # Message displayed on the forgot password page.
     forgotPasswordMessage: "You can change your password by changing the configuration." # @schema default: "You can change your password by changing the configuration."
     # Path to the background image.
-    backgroundImage: "/background.jpg" # @schema default: "/background.jpg"
+    backgroundImage: "/background.webp" # @schema default: "/background.webp"
     # Disable UI warnings.
     warningsEnabled: true # @schema default: true
 
@@ -312,6 +321,8 @@ tinyauth:
   experimental:
     # Enable the OAuth bridge, uses a new way to format OAuth user information.
     oauthBridgeEnabled: false # @schema default: false
+    # Disable the fallback to forward_auth modules when auth_request or ext_authz fail.
+    disableAuthModuleFallback: false # @schema default: false
 
   # log config
   log:

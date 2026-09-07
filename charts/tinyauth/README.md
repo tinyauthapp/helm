@@ -1,6 +1,6 @@
 # tinyauth
 
-![Version: 2.1.3](https://img.shields.io/badge/Version-2.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.1.3](https://img.shields.io/badge/AppVersion-v5.1.3-informational?style=flat-square)
+![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.2.0](https://img.shields.io/badge/AppVersion-v5.2.0-informational?style=flat-square)
 
 The tiniest OpenID Certified™ authorization and authentication server you have ever seen.
 
@@ -116,6 +116,7 @@ The tiniest OpenID Certified™ authorization and authentication server you have
 | tinyauth.configFile | string | `""` |  |
 | tinyauth.database.driver | string | `"sqlite"` |  |
 | tinyauth.database.path | string | `"/data/tinyauth.db"` |  |
+| tinyauth.experimental.disableAuthModuleFallback | bool | `false` |  |
 | tinyauth.experimental.oauthBridgeEnabled | bool | `false` |  |
 | tinyauth.labelProvider | string | `"auto"` |  |
 | tinyauth.ldap.address | string | `""` |  |
@@ -140,6 +141,10 @@ The tiniest OpenID Certified™ authorization and authentication server you have
 | tinyauth.log.streams.http.level | string | `""` |  |
 | tinyauth.oauth.autoRedirect | string | `""` |  |
 | tinyauth.oauth.providers[0].authUrl | string | `""` |  |
+| tinyauth.oauth.providers[0].claims.email | string | `""` |  |
+| tinyauth.oauth.providers[0].claims.groups | string | `""` |  |
+| tinyauth.oauth.providers[0].claims.name | string | `""` |  |
+| tinyauth.oauth.providers[0].claims.username | string | `""` |  |
 | tinyauth.oauth.providers[0].clientId | string | `""` |  |
 | tinyauth.oauth.providers[0].clientSecret | string | `""` |  |
 | tinyauth.oauth.providers[0].clientSecretFile | string | `""` |  |
@@ -178,7 +183,7 @@ The tiniest OpenID Certified™ authorization and authentication server you have
 | tinyauth.tailscale.cacheDuration | int | `300` |  |
 | tinyauth.tailscale.enabled | bool | `false` |  |
 | tinyauth.tailscale.tailnet | string | `""` |  |
-| tinyauth.ui.backgroundImage | string | `"/background.jpg"` |  |
+| tinyauth.ui.backgroundImage | string | `"/background.webp"` |  |
 | tinyauth.ui.forgotPasswordMessage | string | `"You can change your password by changing the configuration."` |  |
 | tinyauth.ui.title | string | `"Tinyauth"` |  |
 | tinyauth.ui.warningsEnabled | bool | `true` |  |
