@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   tinyauth:
   - apiVersion: v2
+    appVersion: v5.2.0
+    created: "2026-09-07T17:22:08.220874389Z"
+    description: The tiniest OpenID Certified™ authorization and authentication server
+      you have ever seen.
+    digest: 048903befe4500ea0c01b100bbb8cb20d83f1450055bc15baf2285099710a495
+    name: tinyauth
+    type: application
+    urls:
+    - https://github.com/tinyauthapp/helm/releases/download/tinyauth-2.2.0/tinyauth-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v2
     appVersion: v5.1.3
     created: "2026-07-30T18:36:32.286043068Z"
     description: The tiniest OpenID Certified™ authorization and authentication server
@@ -194,4 +205,4 @@ entries:
     urls:
     - https://github.com/steveiliop56/tinyauth-helm/releases/download/tinyauth-0.1.0/tinyauth-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-30T18:36:32.286192227Z"
+generated: "2026-09-07T17:22:08.22095619Z"
